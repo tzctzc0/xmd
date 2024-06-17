@@ -62,6 +62,9 @@ const createVideoItemEls = instructions => {
 }
 
 const createVideoItemEl = tweet => {
+	// 특정 기능이 제한된 트윗은 구조가 또 다름
+	if (tweet.__typename === 'TweetWithVisibilityResults') tweet = tweet.tweet
+
 	const isRetweet = 'retweeted_status_result' in tweet.legacy
 	if (isRetweet) return null
 	
@@ -105,6 +108,7 @@ const createVideoItemEl = tweet => {
 	const tweetContentEl = document.createElement('main')
 	tweetContentEl.classList.add('tweet-content')
 	tweetContentEl.innerText = tweetContent
+	
 	contentEl.append(
 		tweetHeaderEl,
 		document.createElement('hr'),
