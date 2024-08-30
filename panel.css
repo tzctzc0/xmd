@@ -41,3 +41,11 @@ li {
 	font-size: 0.9em;
 	color: gray;
 }
+.video-item {
+	flex: 1;
+}
+.video-item button {
+	height: 100%;
+	min-height: 2.5em;
+	margin-left: auto;
+}
