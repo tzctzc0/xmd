@@ -1,3 +1,6 @@
+* {
+	box-sizing: border-box;
+}
 body {
 	margin: 0;
 }
@@ -20,13 +23,28 @@ li {
 }
 
 #items {
-	margin: 0.5em;
+	height: 100%;
+	padding: 0.5em;
+	margin: 0;
+	overflow: auto; /* el.scrollTop = el.scrollHeight가 작동하려면 필요함 */
 }
 .tweet {
 	display: flex;
 	gap: 1em;
 	padding: 0.5em;
 	border: 1px solid gray;
+}
+.tweet[data-download-status] {
+	background-color: rgb(from var(--status-color) r g b / 25%);
+}
+.tweet[data-download-status="pending"] {
+	--status-color: black;
+}
+.tweet[data-download-status="complete"] {
+	--status-color: green;
+}
+.tweet[data-download-status="fail"] {
+	--status-color: red;
 }
 .tweet > main {
 	flex-grow: 1;

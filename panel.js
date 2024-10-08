@@ -10,6 +10,7 @@ chrome.devtools.network.onRequestFinished.addListener(req => {
 				.threaded_conversation_with_injections_v2
 				.instructions
 			itemsEl.append(...createVideoItemEls(insts))
+			itemsEl.scrollTop = itemsEl.scrollHeight
 		})
 	} else if (req.request.url.includes('/UserTweets')) {
 		req.getContent(body => {
@@ -23,6 +24,7 @@ chrome.devtools.network.onRequestFinished.addListener(req => {
 				.timeline
 				.instructions
 			itemsEl.append(...createVideoItemEls(insts))
+			itemsEl.scrollTop = itemsEl.scrollHeight
 		})
 	}
 })
@@ -140,6 +142,7 @@ const createVideoItemEl = tweet => {
 		const downloadBtnEl = document.createElement('button')
 		downloadBtnEl.innerText = 'Download'
 		downloadBtnEl.addEventListener('click', () => {
+			tweetEl.dataset.downloadStatus = 'pending'
 			fetch(bestVariant.url)
 				.then(res => res.blob())
 				.then(blob => {
@@ -149,6 +152,11 @@ const createVideoItemEl = tweet => {
 					document.body.append(linkEl)
 					linkEl.click()
 					linkEl.remove()
+					tweetEl.dataset.downloadStatus = 'complete'
+				})
+				.catch(err => {
+					console.error(err)
+					tweetEl.dataset.downloadStatus = 'fail'
 				})
 		})
 		
